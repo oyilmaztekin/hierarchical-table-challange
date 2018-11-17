@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import  { UserContext } from './../../context/UserContext'
 
-function ContextHoc(WrappedComponent) {
+const ContextHoc = WrappedComponent => {
     return class extends Component {
         constructor(props) {
             super(props);

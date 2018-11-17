@@ -10,10 +10,11 @@ const subStyle = {
 class DataTable extends Component {
     constructor(props) {
       super(props)
+      
       this.removeNodeFromTree = this.removeNodeFromTree.bind(this)
       this.toggleCollapseUser = this.toggleCollapseUser.bind(this)
     }
-    
+
     removeNodeFromTree(index){
         const users = this.props.context.state.users
         const newUsers = users.filter(user => user.ID !== index)
@@ -52,8 +53,8 @@ class DataTable extends Component {
                  {
                     this.props.context.state.users.map((user, index) => {
                         return (
-                        <React.Fragment>
-                          <tbody key= { index }>
+                        <React.Fragment key= { index }>
+                          <tbody>
                           <tr>
                           
                             <td> { user.ID } </td>
