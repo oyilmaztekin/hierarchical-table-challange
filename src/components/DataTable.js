@@ -22,10 +22,9 @@ class DataTable extends Component {
     this.props.context.updateValue("users", newUsers);
   }
 
-  toggleCollapseUser(user, index, users) {
+  toggleCollapseUser(user, users) {
     user.collapse = !user.collapse;
-    const newUsers = this.props.context.state.users;
-    //state güncelleniyor ancak table içerisine basamıyor
+    const newUsers = users
     this.props.context.updateValue("users", newUsers);
   }
 
@@ -46,7 +45,7 @@ class DataTable extends Component {
                   {u.children.length ? (
                     <Button
                       bsStyle="link"
-                      onClick={() => this.toggleCollapseUser(u, i, newUsers)}
+                      onClick={() => this.toggleCollapseUser(u, newUsers)}
                     >
                       Toggle Collapse{" "}
                       {u.collapse ? (
@@ -109,7 +108,7 @@ class DataTable extends Component {
                               <Button
                                 bsStyle="link"
                                 onClick={() =>
-                                  this.toggleCollapseUser(user, index, newUsers)
+                                  this.toggleCollapseUser(user, newUsers)
                                 }
                               >
                                 Toggle Collapse{" "}
@@ -133,22 +132,6 @@ class DataTable extends Component {
                         </tr>
                       </tbody>
                       {this.createChildrenRecursively(user)}
-                      {/* {
-                            user.collapse ?
-                                user.children.map((u, i) => {
-                                   return(
-                                    <tbody key={i}>
-                                        <tr>
-                                            <td style={subStyle}> { u.ID } </td>
-                                            <td style={subStyle}>  { u.Phone } </td>
-                                            <td style={subStyle}> { u.City } </td>
-                                            <td style={subStyle}> { u.Name } </td>
-                                        </tr>
-                                    </tbody>
-                                   )
-                                })
-                                : null    
-                          } */}
                     </React.Fragment>
                   );
                 })}
