@@ -13,6 +13,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --verbose",
     "test-coverage": "react-scripts test --coverage",
+    "test-debug": "react-scripts --inspect-brk test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

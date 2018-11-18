@@ -13,7 +13,8 @@ class DataTable extends Component {
 
     this.removeNodeFromTree = this.removeNodeFromTree.bind(this);
     this.toggleCollapseUser = this.toggleCollapseUser.bind(this);
-    this.createChildrenRecursively = this.createChildrenRecursively.bind(this);
+    this.childrenRecursivelyRenderer = this.childrenRecursivelyRenderer.bind(this);
+    debugger
   }
 
   removingTree(newUsers, index) {
@@ -41,9 +42,9 @@ class DataTable extends Component {
     this.props.context.updateValue("users", newUsers);
   }
 
-  createChildrenRecursively(child) {
+  childrenRecursivelyRenderer(child) {
     const newUsers = Object.assign(this.props.context.state.users);
-    if (child.collapse) {
+    if (!child.collapse) return null
       return child.children.map((u, i) => {
         return (
           <React.Fragment key={i}>
@@ -55,19 +56,16 @@ class DataTable extends Component {
                 <td> {u.Name} </td>
                 <td>
                   {" "}
-                  {u.children.length ? (
+                  {!!u.children.length && (
                     <Button
                       bsStyle="link"
                       onClick={() => this.toggleCollapseUser(u, newUsers)}
                     >
                       Toggle Collapse{" "}
-                      {u.collapse ? (
-                        <Glyphicon glyph="chevron-up" />
-                      ) : (
-                        <Glyphicon glyph="chevron-down" />
-                      )}
+                      <Glyphicon glyph={`chevron-${u.collapse ? 'up' : 'down'}`} />
+                    
                     </Button>
-                  ) : null}
+                  ) }
                 </td>
                 <td>
                   <Button
@@ -81,11 +79,10 @@ class DataTable extends Component {
               </tr>
             </tbody>
             {child.children &&
-              this.createChildrenRecursively(child.children[i])}
+              this.childrenRecursivelyRenderer(child.children[i])}
           </React.Fragment>
         );
       });
-    }
   }
 
   render() {
@@ -145,7 +142,7 @@ class DataTable extends Component {
                           </td>
                         </tr>
                       </tbody>
-                      {this.createChildrenRecursively(user)}
+                      {this.childrenRecursivelyRenderer(user)}
                     </React.Fragment>
                   );
                 })}

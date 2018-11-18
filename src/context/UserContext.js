@@ -3,7 +3,7 @@ import createTree from "./../utils/createTreeFromArray";
 import { DataSet } from "./../mockData/DataSet";
 
 export const UserContext = React.createContext();
-const UserTree = createTree(DataSet);
+export const UserTree = createTree(DataSet);
 
 class UserProvider extends Component {
   constructor(props) {
