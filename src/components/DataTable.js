@@ -9,37 +9,34 @@ const subStyle = {
 
 class DataTable extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
-    this.removeNodeFromTree = this.removeNodeFromTree.bind(this);
-    this.toggleCollapseUser = this.toggleCollapseUser.bind(this);
-    this.childrenRecursivelyRenderer = this.childrenRecursivelyRenderer.bind(this);
+    this.removeNodeFromTree = this.removeNodeFromTree.bind(this)
+    this.toggleCollapseUser = this.toggleCollapseUser.bind(this)
+    this.childrenRecursivelyRenderer = this.childrenRecursivelyRenderer.bind(this)
     debugger
   }
 
-  removingTree(newUsers, index) {
-    for (let ind = 0; ind < newUsers.length; ind++) {
+  removeNode(newUsers, index) {
+    for (let ind in newUsers) {
       if (newUsers[ind].ID === index) {
-        newUsers.splice(ind, 1);
-        break;
+        newUsers.splice(ind, 1)
+        break
       } else if (newUsers[ind].collapse && newUsers[ind].children) {
-        this.removingTree(newUsers[ind].children, index);
+        this.removeNode(newUsers[ind].children, index)
       }
     }
   }
   removeNodeFromTree(index) {
-    const users = this.props.context.state.users;
-    let newUsers = users;
-    if (users) {
-      this.removingTree(newUsers, index);
-    }
-    this.props.context.updateValue("users", newUsers);
+    const users = Object.assign(this.props.context.state.users)
+    this.removeNode(users, index)
+    this.props.context.updateValue("users", users)
   }
 
   toggleCollapseUser(user, users) {
     user.collapse = !user.collapse;
-    const newUsers = users
-    this.props.context.updateValue("users", newUsers);
+    const newUsers = Object.assign(users)
+    this.props.context.updateValue("users", newUsers)
   }
 
   childrenRecursivelyRenderer(child) {
