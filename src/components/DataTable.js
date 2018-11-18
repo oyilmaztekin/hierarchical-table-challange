@@ -16,9 +16,22 @@ class DataTable extends Component {
     this.createChildrenRecursively = this.createChildrenRecursively.bind(this);
   }
 
+  removingTree(newUsers, index) {
+    for (let ind = 0; ind < newUsers.length; ind++) {
+      if (newUsers[ind].ID === index) {
+        newUsers.splice(ind, 1);
+        break;
+      } else if (newUsers[ind].collapse && newUsers[ind].children) {
+        this.removingTree(newUsers[ind].children, index);
+      }
+    }
+  }
   removeNodeFromTree(index) {
     const users = this.props.context.state.users;
-    const newUsers = users.filter(user => user.ID !== index);
+    let newUsers = users;
+    if (users) {
+      this.removingTree(newUsers, index);
+    }
     this.props.context.updateValue("users", newUsers);
   }
 
@@ -67,7 +80,8 @@ class DataTable extends Component {
                 </td>
               </tr>
             </tbody>
-            {child.children && this.createChildrenRecursively(child.children[i])}
+            {child.children &&
+              this.createChildrenRecursively(child.children[i])}
           </React.Fragment>
         );
       });
