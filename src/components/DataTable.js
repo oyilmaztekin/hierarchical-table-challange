@@ -28,6 +28,7 @@ class DataTable extends Component {
         const newUsers = this.props.context.state.users
         //state güncelleniyor ancak table içerisine basamıyor
         this.props.context.updateValue('users', newUsers)
+        this.createChildrenRecursively(user)
     }
     
     createChildrenRecursively(child){
