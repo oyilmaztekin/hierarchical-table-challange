@@ -13,6 +13,7 @@ class DataTable extends Component {
       
       this.removeNodeFromTree = this.removeNodeFromTree.bind(this)
       this.toggleCollapseUser = this.toggleCollapseUser.bind(this)
+      this.createChildrenRecursively = this.createChildrenRecursively.bind(this)
     }
 
     removeNodeFromTree(index){
@@ -21,18 +22,61 @@ class DataTable extends Component {
         this.props.context.updateValue('users', newUsers);
     }
     
-    toggleCollapseUser(userID){
-        const users = this.props.context.state.users
-        const newUsers = users
-        newUsers.forEach(user => {
-            if ( user.ID === userID ) {
-                user.collapse = !user.collapse
-            } 
-        })
-        this.props.context.updateValue('users', newUsers);
+    toggleCollapseUser(user, index, users){
+        debugger
+        user.collapse = !user.collapse
+        const newUsers = this.props.context.state.users
+        //state güncelleniyor ancak table içerisine basamıyor
+        this.props.context.updateValue('users', newUsers)
+    }
+    
+    createChildrenRecursively(child){
+        const newUsers = Object.assign(this.props.context.state.users)
+        if(child.collapse) {
+            return(
+                child.children.map((u, i) => {
+                    return(
+                        <React.Fragment key= { i }>
+                        <tbody>
+                        <tr>
+                          <td> { u.ID } </td>
+                          <td> { u.Phone } </td>
+                          <td> { u.City } </td>
+                          <td> { u.Name } </td>
+                          <td> {
+                            u.children.length  ? 
+                            <Button bsStyle="link"
+                              onClick={()=>  this.toggleCollapseUser(u, i, newUsers) }> 
+                              Toggle Collapse {' '}
+                               { 
+                                 u.collapse 
+                                   ?  <Glyphicon glyph="chevron-up" /> 
+                                   :  <Glyphicon glyph="chevron-down" /> 
+                                   
+                                }
+                              </Button>
+                            : 
+                              null
+                          }
+                          </td>
+                          <td> 
+                          <Button bsStyle="danger" bsSize="xsmall" 
+                          onClick={()=>  this.removeNodeFromTree(u.ID) }>
+                           Remove
+                          </Button>
+                          </td>
+                        </tr>                        
+                        </tbody>
+                        </React.Fragment>
+                    )
+                })
+            )
+            
+        }
     }
     
     render() {
+      const newUsers = Object.assign(this.props.context.state.users)
       return (
         <div className="person">
               <React.Fragment>
@@ -51,12 +95,11 @@ class DataTable extends Component {
                         </tr>
                       </thead>
                  {
-                    this.props.context.state.users.map((user, index) => {
+                    newUsers.map((user, index) => {
                         return (
                         <React.Fragment key= { index }>
                           <tbody>
                           <tr>
-                          
                             <td> { user.ID } </td>
                             <td> { user.Phone } </td>
                             <td> { user.City } </td>
@@ -64,7 +107,7 @@ class DataTable extends Component {
                             <td> {
                               user.children.length  ? 
                               <Button bsStyle="link"
-                                onClick={()=>  this.toggleCollapseUser(user.ID) }> 
+                                onClick={()=>  this.toggleCollapseUser(user,index, newUsers) }> 
                                 Toggle Collapse {' '}
                                  { 
                                    user.collapse 
@@ -85,7 +128,8 @@ class DataTable extends Component {
                             </td>
                           </tr>                        
                           </tbody>
-                          {
+                          {this.createChildrenRecursively(user)}
+                          {/* {
                             user.collapse ?
                                 user.children.map((u, i) => {
                                    return(
@@ -100,8 +144,7 @@ class DataTable extends Component {
                                    )
                                 })
                                 : null    
-                          }
-                          
+                          } */}
                           </React.Fragment>  
                         );
                     })
