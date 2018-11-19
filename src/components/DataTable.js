@@ -1,11 +1,6 @@
-import React, { Component } from "react";
-import { Row, Col, Table, Button, Glyphicon } from "react-bootstrap";
-import ContextHoc from "./../utils/hoc/contextHoc";
-
-const subStyle = {
-  color: "#efefef",
-  backgroundColor: "#323232"
-};
+import React, { Component } from "react"
+import { Row, Col, Table, Button, Glyphicon } from "react-bootstrap"
+import ContextHoc from "./../utils/hoc/contextHoc"
 
 class DataTable extends Component {
   constructor(props) {
@@ -14,7 +9,6 @@ class DataTable extends Component {
     this.removeNodeFromTree = this.removeNodeFromTree.bind(this)
     this.toggleCollapseUser = this.toggleCollapseUser.bind(this)
     this.childrenRecursivelyRenderer = this.childrenRecursivelyRenderer.bind(this)
-    debugger
   }
 
   removeNode(newUsers, index) {
@@ -34,13 +28,13 @@ class DataTable extends Component {
   }
 
   toggleCollapseUser(user, users) {
-    user.collapse = !user.collapse;
+    user.collapse = !user.collapse
     const newUsers = Object.assign(users)
     this.props.context.updateValue("users", newUsers)
   }
 
   childrenRecursivelyRenderer(child) {
-    const newUsers = Object.assign(this.props.context.state.users);
+    const newUsers = Object.assign(this.props.context.state.users)
     if (!child.collapse) return null
       return child.children.map((u, i) => {
         return (
@@ -78,12 +72,12 @@ class DataTable extends Component {
             {child.children &&
               this.childrenRecursivelyRenderer(child.children[i])}
           </React.Fragment>
-        );
-      });
+        )
+      })
   }
 
   render() {
-    const newUsers = Object.assign(this.props.context.state.users);
+    const newUsers = Object.assign(this.props.context.state.users)
     return (
       <div className="person">
         <React.Fragment>
@@ -141,15 +135,15 @@ class DataTable extends Component {
                       </tbody>
                       {this.childrenRecursivelyRenderer(user)}
                     </React.Fragment>
-                  );
+                  )
                 })}
               </Table>
             </Col>
           </Row>
         </React.Fragment>
       </div>
-    );
+    )
   }
 }
 
-export default ContextHoc(DataTable);
+export default ContextHoc(DataTable)

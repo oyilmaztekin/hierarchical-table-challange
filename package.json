@@ -9,7 +9,7 @@
     "react-scripts": "2.1.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts test --verbose --coverage && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --verbose",
     "test-coverage": "react-scripts test --coverage",

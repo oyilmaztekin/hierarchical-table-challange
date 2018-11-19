@@ -8,29 +8,29 @@
  */
 
 const createTree = function(data) {
-  const tree = [];
-  const currentNode = {};
+  const tree = []
+  const currentNode = {}
 
   for (let i in data) {
-    let currentItem = data[i];
-    let id = currentItem["ID"];
-    let parentId = currentItem["parentID"];
+    let currentItem = data[i]
+    let id = currentItem["ID"]
+    let parentId = currentItem["parentID"]
 
-    currentNode[id] = currentNode[id] || [];
-    currentItem["children"] = currentNode[id];
-    currentItem.collapse = false;
+    currentNode[id] = currentNode[id] || []
+    currentItem["children"] = currentNode[id]
+    currentItem.collapse = false
 
     if (parentId && parentId !== 0) {
-      currentItem.child = true;
+      currentItem.child = true
 
       // push the child node with their children.
-      currentNode[parentId].push(currentItem);
+      currentNode[parentId].push(currentItem)
     } else if (!currentItem.hasOwnProperty("parentID")) {
       // these nodes are will be placed the first depth of the tree
-      tree.push(currentItem);
+      tree.push(currentItem)
     }
   }
-  return tree;
-};
+  return tree
+}
 
-export default createTree;
+export default createTree

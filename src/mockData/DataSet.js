@@ -1,4 +1,4 @@
-export const DataSet = [
+const DataSet = [
   {
     ID: 1,
     parentID: 0,
@@ -572,4 +572,5 @@ export const DataSet = [
   },
   { ID: 99, Phone: "(336) 239-7842", City: "Goderich", Name: "Byron" },
   { ID: 100, Phone: "(714) 477-8291", City: "St. Ives", Name: "Bryar" }
-];
+]
+export default DataSet

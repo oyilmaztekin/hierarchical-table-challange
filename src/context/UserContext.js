@@ -1,24 +1,24 @@
-import React, { Component } from "react";
-import createTree from "./../utils/createTreeFromArray";
-import { DataSet } from "./../mockData/DataSet";
+import React, { Component } from "react"
+import createTree from "./../utils/createTreeFromArray"
+import DataSet from "./../mockData/DataSet"
 
-export const UserContext = React.createContext();
-export const UserTree = createTree(DataSet);
+export const UserContext = React.createContext()
+export const UserTree = createTree(DataSet)
 
 class UserProvider extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
       users: UserTree,
       app: "An App that represents tree in a data table"
-    };
+    }
 
-    this.updateValue = this.updateValue.bind(this);
+    this.updateValue = this.updateValue.bind(this)
   }
 
   updateValue(key, val) {
-    this.setState({ [key]: val });
+    this.setState({ [key]: val })
   }
 
   render() {
@@ -31,8 +31,8 @@ class UserProvider extends Component {
       >
         {this.props.children}
       </UserContext.Provider>
-    );
+    )
   }
 }
 
-export default UserProvider;
+export default UserProvider
